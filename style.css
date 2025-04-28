@@ -1,0 +1,269 @@
+/* --- Base Variables and Themes --- */
+:root {
+  --bg-color: #0f172a;             /* dark navy */
+  --panel-bg: #1e293b;             /* slightly lighter dark */
+  --text-color: #cbd5e1;           /* soft gray */
+  --accent-color: #ffc107;         /* yellow accent */
+  --border-color: #334155;
+  --input-bg: #0f172a;
+  --input-text: #cbd5e1;
+}
+
+body.light-theme {
+  --bg-color: #f8f8f8;             /* off white */
+  --panel-bg: #e0e0e0;             /* light beige */
+  --text-color: #333333;           /* dark text */
+  --accent-color: #ffc107;
+  --border-color: #ccc;
+  --input-bg: #ffffff;
+  --input-text: #333333;
+}
+
+/* --- Global Styles --- */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* --- Header --- */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: var(--panel-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+.header-left h1 {
+  margin: 0;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-right input[type="text"] {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-radius: 5px;
+}
+
+/* --- Global Search Results --- */
+.global-search-results {
+  background-color: var(--panel-bg);
+  padding: 10px;
+  margin: 10px 20px;
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.global-search-results ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.global-search-results li {
+  padding: 5px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* --- Main Content Layout --- */
+.main-content {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* --- Calendar Panel --- */
+.calendar-panel {
+  width: 400px;
+  background-color: var(--panel-bg);
+  padding: 15px;
+  border-radius: 8px;
+}
+.month-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.month-nav button {
+  padding: 5px 10px;
+  border: none;
+  background-color: var(--accent-color);
+  color: #000;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#monthYearDisplay {
+  font-weight: bold;
+}
+/* Calendar grid styling */
+.calendar-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.calendar-day-header,
+.calendar-day {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+}
+.calendar-day {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.calendar-day:hover {
+  background-color: var(--border-color);
+}
+.today {
+  background-color: var(--accent-color);
+  color: #000;
+  font-weight: bold;
+}
+.selected {
+  background-color: var(--accent-color) !important;
+  color: #000;
+  font-weight: bold;
+}
+
+/* --- Info Panel --- */
+.info-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+/* Container for Tasks and Clock */
+.tasks-clock-container {
+  display: flex;
+  gap: 20px;
+}
+
+/* To‑Do List Styles */
+.tasks-container {
+  flex: 1;
+  background-color: var(--panel-bg);
+  padding: 15px;
+  border-radius: 8px;
+}
+.tasks-container h2 {
+  margin-top: 0;
+}
+.task-add,
+.task-search {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.task-add input,
+.task-search input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-radius: 5px;
+}
+.task-add button {
+  padding: 8px 12px;
+  border: none;
+  background-color: var(--accent-color);
+  color: #000;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#taskList {
+  list-style: none;
+  padding: 0;
+}
+#taskList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  margin: 5px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+}
+.task-buttons {
+  display: flex;
+  gap: 5px;
+}
+.task-buttons button {
+  padding: 3px 6px;
+  border: none;
+  background-color: var(--accent-color);
+  color: #000;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+/* --- Clock Widget Styles --- */
+.clock-widget {
+  width: 180px;
+  background-color: var(--panel-bg);
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.clock-widget canvas {
+  display: block;
+  margin: 0 auto 10px auto;
+}
+#digitalClock {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* --- Schedule / Notes --- */
+.schedule-container {
+  background-color: var(--panel-bg);
+  padding: 15px;
+  border-radius: 8px;
+}
+.schedule-container h2 {
+  margin-top: 0;
+}
+#notesArea {
+  width: 100%;
+  min-height: 150px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-radius: 5px;
+  resize: vertical;
+}
+
+/* --- Daily Quote Widget --- */
+.quote-widget {
+  background-color: var(--panel-bg);
+  padding: 15px;
+  margin: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+.quote-widget h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+#dailyQuote {
+  font-size: 1.1rem;
+  font-style: italic;
+}

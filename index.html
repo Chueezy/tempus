@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tempus</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Link to the manifest file -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Meta Tags for Mobile and PWA Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0f172a">
+  
+</head>
+<body>
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <h1>Tempus</h1>
+    </div>
+    <div class="header-right">
+      <input id="globalSearch" type="text" placeholder="Search tasks across dates...">
+      <button id="themeToggle">Toggle Theme</button>
+    </div>
+  </header>
+
+  <!-- Custom Install Button (hidden by default) -->
+  <button id="installBtn" style="display:none; position:fixed; top:10px; right:10px; z-index:1000;">Install Tempus</button>
+
+  <!-- Global Search Results -->
+  <div id="globalSearchResults" class="global-search-results"></div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Calendar Panel -->
+    <div class="calendar-panel">
+      <div class="month-nav">
+        <button id="prevMonth">&lt; Prev</button>
+        <span id="monthYearDisplay"></span>
+        <button id="nextMonth">Next &gt;</button>
+      </div>
+      <div id="calendar"></div>
+    </div>
+
+    <!-- Info Panel -->
+    <div class="info-panel">
+      <div class="tasks-clock-container">
+        <!-- To‑Do List -->
+        <div class="tasks-container">
+          <h2>To‑Do List</h2>
+          <div class="task-add">
+            <input id="newTask" type="text" placeholder="Add new task...">
+            <button id="addTask">Add</button>
+          </div>
+          <div class="task-search">
+            <input id="taskSearch" type="text" placeholder="Search tasks for today...">
+          </div>
+          <ul id="taskList"></ul>
+        </div>
+        <!-- Analog Clock Widget -->
+        <div class="clock-widget">
+          <canvas id="analogClock" width="150" height="150"></canvas>
+          <div id="digitalClock"></div>
+        </div>
+      </div>
+      <!-- Schedule / Notes -->
+      <div class="schedule-container">
+        <h2>Schedule / Notes</h2>
+        <textarea id="notesArea" placeholder="Your notes..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daily Quote Widget -->
+  <div class="quote-widget">
+    <h2>Daily Inspiration</h2>
+    <p id="dailyQuote"></p>
+  </div>
+
+  <script src="script.js"></script>
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(function(registration) {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(function(error) {
+          console.log('Service Worker registration failed:', error);
+        });
+    }
+
+    // Handle the beforeinstallprompt event to show custom install button
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const installBtn = document.getElementById('installBtn');
+      installBtn.style.display = 'block';
+      installBtn.addEventListener('click', () => {
+        installBtn.style.display = 'none';
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+          } else {
+            console.log('User dismissed the install prompt');
+          }
+          deferredPrompt = null;
+        });
+      });
+    });
+
+    // Optionally, for iOS users, show manual instructions:
+    const ua = window.navigator.userAgent.toLowerCase();
+    if (/iphone|ipad|ipod/.test(ua) && !window.navigator.standalone) {
+      console.log("For iOS, instruct users to use 'Add to Home Screen' from the share menu.");
+      // You could display a modal with instructions here.
+    }
+  </script>
+</body>
+</html>
